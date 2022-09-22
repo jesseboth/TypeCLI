@@ -1,7 +1,7 @@
 CC := gcc
 CFLAGS := -g -Wall -std=c99 -fPIC -D_DEFAULT_SOURCE -lm
-CODE   := src/file.c
-C_CODE := src/file.c
+CODE   := src/file.c src/linked_list.o src/queue.o
+C_CODE := src/file.c src/linked_list.c src/queue.c
 
 
 TESTS := $(wildcard tests/*)
