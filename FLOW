@@ -1,0 +1,11 @@
+[BACKLOG]
+make words pretty with escape sequences
+
+[TODO]
+function headers for file, linkedlist and queue
+
+[PROGRESS]
+output words to terminal
+
+[COMPLETE]
+seperate linked_list.h and queue.h to C files
