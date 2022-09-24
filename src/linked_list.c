@@ -10,10 +10,11 @@ void print_linked_list(linked_list *list){
 }   
 
 /*create a node*/
-linked_node *new_node(linked_list_element val){
+linked_node *new_node(linked_list_element val, uint8_t cat){
     linked_node *ret = malloc(sizeof(linked_node));
 
     ret->val = val;
+    ret->category = cat;
     ret->next = NULL;
     return ret;
 }
@@ -21,6 +22,7 @@ linked_node *new_node(linked_list_element val){
 /*free a node*/
 void free_node(linked_node *node){
     node->val = NULL;
+    node->category = NULL;
     node->next = NULL;
     free(node);
 }
@@ -53,8 +55,8 @@ void free_linked_list(linked_list *list){
     list->length = 0;
 }
 
-void linked_list_prepend(linked_list *list, linked_list_element val){
-    linked_node *node = new_node(val);
+void linked_list_prepend(linked_list *list, linked_list_element val, uint8_t cat){
+    linked_node *node = new_node(val, cat);
     node->next = list->head;
     list->head = node;
     if (list->tail == NULL){
@@ -63,12 +65,12 @@ void linked_list_prepend(linked_list *list, linked_list_element val){
     list->length++;
 }
 
-void linked_list_append(linked_list *list, linked_list_element val){
+void linked_list_append(linked_list *list, linked_list_element val, uint8_t cat){
     if (list->tail == NULL){
-        linked_list_prepend(list, val);
+        linked_list_prepend(list, val, cat);
     }
     else{
-        linked_node *node = new_node(val);
+        linked_node *node = new_node(val, cat);
         list->tail->next = node;
         list->tail = node;
         list->length++;

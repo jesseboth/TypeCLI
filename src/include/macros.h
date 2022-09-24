@@ -1,3 +1,3 @@
 #include <stdio.h>
 
-#define printw(str) printf("%s  ", str)
+#define printw(color, str) printf(color "%s  ", str)

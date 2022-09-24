@@ -2,9 +2,9 @@
 #include <stdlib.h>
 #include <string.h>
 
-#include "include/macros.h"
-#include "include/file.h"
-#include "include/queue.h"
+#include "include/colors.h"
+
+#include "include/words.h"
 
 int main(int argc, char **argv){
 
@@ -16,13 +16,7 @@ int main(int argc, char **argv){
 	// 	printf("%d: %s\n", i+1, words->words[i]);
 	// }
 
-	linked_list *list = new_linked_list();
-	for(int i = 0; i < 10; i++){
-		linked_list_append(list, words->words[i]);
-	}
+	setupWords(words);
 
-	char *prev = words->words[10];
-
-	printw(prev);
 	return 0;
 }
