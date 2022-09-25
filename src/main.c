@@ -3,20 +3,39 @@
 #include <string.h>
 
 #include "include/colors.h"
+#include "include/terminal.h"
 
 #include "include/words.h"
 
 int main(int argc, char **argv){
+	char *filename = "src/words.txt";
 
-	struct word_container *words = getWords("src/words.txt");
-	if(!words){
-		return 1;
+	disableInput();
+	setupWords(filename);
+
+	
+	char c;
+	enableInput();
+	turnEchoOff();
+	turnCanonOff();
+	for(int i = 0; i < 10; i++){
+		printEscape(CURSOR_BG)
+		// scanf(" %s", &c);
+		c = fgetc(stdin);
+		if(c == ' '){
+			printf(DEFAULT "  ");
+		}
+		else{
+			printf(CURSOR_BG "%c", c);
+		}
 	}
-	// for(int i = 0; i < words->num_words; i++){
-	// 	printf("%d: %s\n", i+1, words->words[i]);
-	// }
+	disableInput();
+	printf("DONE");
+	goodbyeWords();
 
-	setupWords(words);
+	turnEchoOn();
+	enableInput();
+	turnCanonOn();
 
 	return 0;
 }

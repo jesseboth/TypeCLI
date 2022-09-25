@@ -22,7 +22,7 @@ linked_node *new_node(linked_list_element val, uint8_t cat){
 /*free a node*/
 void free_node(linked_node *node){
     node->val = NULL;
-    node->category = NULL;
+    node->category = 0;
     node->next = NULL;
     free(node);
 }

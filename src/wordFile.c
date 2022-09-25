@@ -1,4 +1,4 @@
-#include "include/file.h"
+#include "include/wordFile.h"
 
 /* load words into a buffer and return a words container */
 struct word_container *getWords(char *filename){
@@ -36,15 +36,10 @@ struct word_container *getWords(char *filename){
     return words;
 }                                                                                                         
 
-int freeWords(struct word_container *words){
-	// void *b1 = words->words;
-	// void *b2 = *words->words;
-
-	// return 
-	// free(b1)		&& 	// free buffer	
-	// free(b1)		&&	// free array
-	// free(words);	 	// free container	
-	return 1;
+void freeWords(struct word_container *words){
+	free(words->words[0]); 	// free buffer
+	free(words->words);		// free array
+	free(words);	 		// free container	
 }
 
 char *nextWord(char **buffer){

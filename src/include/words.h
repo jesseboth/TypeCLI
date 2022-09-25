@@ -1,7 +1,9 @@
 #include "linked_list.h"
-#include "file.h"
+#include "wordFile.h"
 #include "colors.h"
 #include "macros.h"
 
 
-void setupWords(struct word_container *words);
+void setupWords(char *filename);
+void printWords();
+void goodbyeWords();

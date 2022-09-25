@@ -9,6 +9,6 @@ struct word_container{
 };
 
 struct word_container *getWords(char *filename);
-int freeWords(struct word_container *words);
+void freeWords(struct word_container *words);
 char *nextWord(char **buffer);
 unsigned long numWords(void *buffer);

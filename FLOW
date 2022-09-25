@@ -1,15 +1,19 @@
 [BACKLOG]
-make words pretty with escape sequences
-
-[TODO]
-function headers for file, linkedlist and queue
-NEED to free everything appropriately
+setup timer
+make the "cursor" highlight the text
+implement word scrolling - store correct vs incorrect word
+indicate wrong/correct current word
 move cursor relative to current word
 change color of typed letters when incorrect/correct letter is typed
+
+[TODO]
 treat linked list like a queue - remove head append tail
 
 [PROGRESS]
-output words to terminal
+make words pretty with escape sequences
+function headers for file, linkedlist and queue
 
 [COMPLETE]
+output words to terminal
+NEED to free everything appropriately
 seperate linked_list.h and queue.h to C files
