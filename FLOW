@@ -7,13 +7,13 @@ move cursor relative to current word
 change color of typed letters when incorrect/correct letter is typed
 
 [TODO]
-treat linked list like a queue - remove head append tail
+treat linked list like a queue - remove head append tail (prototypes made)
 
 [PROGRESS]
 make words pretty with escape sequences
-function headers for file, linkedlist and queue
 
 [COMPLETE]
 output words to terminal
 NEED to free everything appropriately
 seperate linked_list.h and queue.h to C files
+function headers for file, linkedlist 
