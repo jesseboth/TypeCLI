@@ -1,4 +1,5 @@
 #include "include/words.h"
+#include "include/terminal.h"
 #include <time.h>
 
 #define SHOW 11
@@ -130,9 +131,15 @@ void printWords(){
 }
 
 void goodbyeWords(){
+    disableInput();
+
     free_linked_list(getList());
     used(0, 0);
     randWord(0);
     getWordContainer(0, 0);
     printf(DEFAULT ERASE_LINE CURSOR_HOME "WPM: %d" CURSOR_DONE CURSOR_SHOW, wordCount(0));
+
+	turnEchoOn();
+	enableInput();
+	turnCanonOn();
 }

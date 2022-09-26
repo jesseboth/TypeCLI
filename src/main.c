@@ -1,14 +1,20 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <signal.h>
 
 #include "include/colors.h"
 #include "include/terminal.h"
 
 #include "include/words.h"
 
+void *signalHandler(int sig){
+	goodbyeWords();
+}
+
 int main(int argc, char **argv){
 	char *filename = "src/words.txt";
+	atexit(goodbyeWords); 				// exit function
 
 	disableInput();
 	setupWords(filename);
@@ -26,16 +32,9 @@ int main(int argc, char **argv){
 			printf(DEFAULT "  ");
 		}
 		else{
-			printf(CURSOR_BG "%c", c);
+			printf(CURSOR_BG "%c" DEFAULT, c);
 		}
 	}
-	disableInput();
-	printf("DONE");
-	goodbyeWords();
-
-	turnEchoOn();
-	enableInput();
-	turnCanonOn();
 
 	return 0;
 }

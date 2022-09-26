@@ -106,7 +106,7 @@ void discardInputBuffer(void) {
         char buf[500];
         ssize_t numRead = read(0,buf,500);
         if (numRead == -1) { fprintf(stderr, "[error] read() failed: %s", strerror(errno) ); exit(1); }
-        printf("[debug] cleared %d chars\n",numRead);
+        printf("[debug] cleared %ld chars\n",numRead);
     } // end while
 } // end discardInputBuffer()
 
