@@ -15,6 +15,12 @@ void setupWords(char *filename);
 */
 void printWords();
 
+/* Performs necessary operations to type the current word until space char
+    @param -
+    @return -
+*/
+void typeCurrentWord();
+
 /* Frees container and reset terminal config  
     @param -
     @return -

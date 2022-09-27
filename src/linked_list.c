@@ -33,6 +33,7 @@ linked_list *new_linked_list(){
 
     ret->head = NULL;
     ret->tail = NULL;
+    ret->current = NULL;
 
     ret->length = 0;
     return ret;

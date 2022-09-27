@@ -86,6 +86,7 @@ int wordCount(int add){
 
 void setupWords(char *filename){
 
+	disableInput();
     struct word_container *words = getWordContainer(0, filename);
 
     static char *placeholder = "    ";
@@ -101,6 +102,7 @@ void setupWords(char *filename){
 
     // Current Word
     linked_list_append(list, randWord(words), CAT_CURRENT);
+    list->current = list->tail;
 
 	for(int i = 0; i < ONDECK; i++){
         linked_list_append(list, randWord(words), CAT_UPCOMING);
@@ -109,6 +111,9 @@ void setupWords(char *filename){
     printf("\n\n\n" CURSOR_START);
     printWords();
 
+	enableInput();
+	turnEchoOff();
+	turnCanonOff();
 }
 
 void printWords(){
@@ -128,6 +133,89 @@ void printWords(){
 	}
     printEscape(CURSOR_RESTORE);
     fflush(NULL);
+}
+
+/* callers job to save/restore cursor */
+void printWordsAt(linked_node *start){
+    while(start){
+        if(start->category == CAT_CORRECT){
+            printw(DONE_CORRECT, start->val);
+        }
+        else if(start->category = CAT_CURRENT){
+            printw(CURRENT, start->val);
+        }
+        else if(start->category = CAT_UPCOMING){
+            printw(UPCOMING, start->val);
+        }
+        else if(start->category = CAT_WRONG){
+            printw(DONE_WRONG, start->val);
+        }
+        else if(start->category = CAT_UNSET){
+            printw(DEFAULT, start->val);
+        }
+		start = start->next;
+	}
+    fflush(NULL);
+}
+
+    /* Special Cases:
+        Arrow: L + R   (MAYBE)
+        BackSpace
+        Delete
+        c > ' ' && c < 127 (Normal)
+        IGNORE everything else
+    */
+int checkChar(char *word, uint8_t idx, char typed, char *string, int correct){
+
+    if(word[idx] == typed && correct){
+        printf(CUR_CORRECT "%c" CURRENT, typed);
+        return 1;
+    }
+    else if(word[idx] != typed && correct){
+        printf("\e[%dD" CUR_CORRECT "%s", idx, string);
+        printf(CURSOR_BACK CUR_WRONG "%c", typed);
+        printEscape(CURSOR_SAVE);
+        printf(CURRENT "%s  ", word+idx);
+        printWordsAt(getList()->current->next);
+        printEscape(CURSOR_RESTORE);
+    }
+    else if(!correct && typed != '\b'){
+        printf(CUR_WRONG "%c", typed);
+        printEscape(CURSOR_SAVE);
+        printf(CURRENT "%s  ", word+idx);
+        printWordsAt(getList()->current->next);
+        printEscape(CURSOR_RESTORE);
+    }
+
+   return 0;
+}
+
+void typeCurrentWord(){
+    linked_list *list = getList();
+    char *word = list->current->val;
+    uint8_t word_i = 0;
+    int correct = 1;
+
+    static char typed_arr[50];
+    static char *typed = typed_arr;
+
+    typed[0] = 0;           // maintain null termination
+
+    while(1){
+    printf(CURSOR_BG CURRENT "%c" CURSOR_BACK DEFAULT, word[word_i]);
+		*typed = fgetc(stdin);
+        *(typed+1) = 0;
+
+        if(*typed == ' '){
+			printf(DEFAULT "  ");
+            return;
+        }
+        else if(correct = checkChar(word, word_i, *typed, typed_arr, correct)){
+            word_i++;
+        }
+
+        typed++;    // increment typed every loop
+    }
 }
 
 void goodbyeWords(){

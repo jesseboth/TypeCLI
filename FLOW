@@ -1,18 +1,18 @@
 [BACKLOG]
 setup timer
-make the "cursor" highlight the text
-implement word scrolling - store correct vs incorrect word
-indicate wrong/correct current word
-move cursor relative to current word
-change color of typed letters when incorrect/correct letter is typed
 
 [TODO]
 treat linked list like a queue - remove head append tail (prototypes made)
+implement word scrolling - store correct vs incorrect word
 
 [PROGRESS]
-make words pretty with escape sequences
+indicate wrong/correct current word
+move cursor relative to current word
+make the "cursor" highlight the text
+change color of typed letters when incorrect/correct letter is typed
 
 [COMPLETE]
+make words pretty with escape sequences
 output words to terminal
 NEED to free everything appropriately
 seperate linked_list.h and queue.h to C files

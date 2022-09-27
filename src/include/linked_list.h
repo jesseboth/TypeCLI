@@ -18,12 +18,14 @@ typedef struct linked_node
 /* Linked List naster struct 
     @param *head    first element
     @param *tail    last element
+    @param *current current node for iteration
     @param length   current length
 */
 typedef struct linked_list
 {
     linked_node *head;          //store head
     linked_node *tail;          //store tail
+    linked_node *current;       // store curreent
 
     int length;                 //list length
 } linked_list;
