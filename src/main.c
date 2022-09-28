@@ -18,6 +18,7 @@ int main(int argc, char **argv){
 
 	setupWords(filename);
 	typeCurrentWord();
+	typeCurrentWord();
 
 	return 0;
 }
