@@ -1,12 +1,12 @@
 [BACKLOG]
 
 [TODO]
-setup timer
-
+count all chars
+wpm = char / 5
 
 [PROGRESS]
-fix backspace at last char
-Debug backspace
+setup timer
+Debug backspace - fix backspace at last char
 
 [COMPLETE]
 implement word scrolling - store correct vs incorrect word

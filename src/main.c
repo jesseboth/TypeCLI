@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include <string.h>
-#include <signal.h>
+#include <pthread.h>
+#include <unistd.h>
 
 #include "include/colors.h"
 #include "include/terminal.h"
@@ -13,7 +13,11 @@ int main(int argc, char **argv){
 	atexit(goodbyeWords); 				// exit function
 
 	setupWords(filename);
-	type();
+	pthread_t thread;
+	pthread_create(&thread, NULL, &type, NULL);
+
+	sleep(60);
+	pthread_cancel(thread);
 
 	return 0;
 }

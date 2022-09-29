@@ -328,7 +328,7 @@ void typeCurrentWord(){
     printf(CURSOR_FORWARD DEFAULT "  ");
 }
 
-void type(){
+void *type(){
     struct word_container *words = getWordContainer(1, 0);
     linked_list *list = getList();
 
@@ -340,6 +340,8 @@ void type(){
         list->current = list->current->next;
         printWords();
     }
+
+    return NULL;
 }
 
 void goodbyeWords(){

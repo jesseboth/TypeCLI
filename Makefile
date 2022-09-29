@@ -1,5 +1,5 @@
 CC := gcc
-CFLAGS := -g -Wall -std=c99 -fPIC -D_DEFAULT_SOURCE -lm
+CFLAGS := -g -Wall -std=c99 -fPIC -D_DEFAULT_SOURCE -lm -pthread
 CODE   := src/wordFile.c src/linked_list.o src/words.o src/terminal.o
 C_CODE := src/wordFile.c src/linked_list.c src/words.c src/terminal.c
 

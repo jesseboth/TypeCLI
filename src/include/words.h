@@ -25,7 +25,7 @@ void typeCurrentWord();
     @param -
     @return -
 */
-void type();
+void *type();
 
 /* Frees container and reset terminal config  
     @param -
