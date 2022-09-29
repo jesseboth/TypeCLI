@@ -6,7 +6,9 @@ wpm = char / 5
 
 [PROGRESS]
 setup timer
-Debug backspace - fix backspace at last char
+
+Debug backspace - fix backspace at last char 
+                - when first char is incorrect
 
 [COMPLETE]
 implement word scrolling - store correct vs incorrect word
