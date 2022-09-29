@@ -21,6 +21,12 @@ void printWords();
 */
 void typeCurrentWord();
 
+/* Loop and swap words
+    @param -
+    @return -
+*/
+void type();
+
 /* Frees container and reset terminal config  
     @param -
     @return -

@@ -1,15 +1,17 @@
 [BACKLOG]
-setup timer
 
 [TODO]
-make a loop for more words
-treat linked list like a queue - remove head append tail (prototypes made)
-implement word scrolling - store correct vs incorrect word
+setup timer
+
 
 [PROGRESS]
+fix backspace at last char
 Debug backspace
 
 [COMPLETE]
+implement word scrolling - store correct vs incorrect word
+make a loop for more words
+treat linked list like a queue - remove head append tail (prototypes made)
 change color of typed letters when incorrect/correct letter is typed
 make the "cursor" highlight the text
 move cursor relative to current word

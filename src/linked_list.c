@@ -79,6 +79,10 @@ void linked_list_append(linked_list *list, linked_list_element val, uint8_t cat)
 }
 
 linked_list_element linked_list_index(linked_list *list, int i){
+    return linked_list_index_node(list, i)->val;
+}
+
+linked_node *linked_list_index_node(linked_list *list, int i){
     if(i >= list->length){
         printf("Index out of Bounds");
         return NULL;
@@ -87,5 +91,54 @@ linked_list_element linked_list_index(linked_list *list, int i){
     for(int j = 0; j<i; j++){
         node = node->next;
     }
-    return node->val;
+    return node;
+}
+
+void linked_list_remove_index(linked_list *list, int i){
+    free(linked_list_remove_index_node(list, i));
+}
+
+linked_node *linked_list_remove_index_node(linked_list *list, int i){
+    if(i >= list->length){
+        printf("Index out of Bounds");
+        return NULL;
+    }
+    linked_node *node = list->head;
+    linked_node *prev = NULL;
+    for(int j = 0; j<i; j++){
+        prev = node;
+        node = node->next;
+    }
+
+    // set previous next
+    if(prev){prev->next = node->next;}
+
+    // set head/tail
+    if(i == 0){
+        list->head = node->next;
+    }
+    else if(i == list->length-1){
+        list->tail = prev;
+    }
+
+    // decrement length
+    list->length--;
+
+    return node;
+}
+
+void linked_list_remove_head(linked_list *list){
+    free(linked_list_remove_index_node(list, 0));
+}
+
+linked_node *linked_list_remove_head_node(linked_list *list){
+    return linked_list_remove_index_node(list, 0);
+}
+
+void linked_list_remove_tail(linked_list *list){
+    free(linked_list_remove_index_node(list, list->length-1));
+}
+
+linked_node *linked_list_remove_tail_node(linked_list *list){
+    return linked_list_remove_index_node(list, list->length-1);
 }

@@ -7,7 +7,7 @@
 #define ONDECK 5
 
 #define CAT_UNSET 0
-#define CAT_WRONG -1
+#define CAT_WRONG 0xFF
 #define CAT_CORRECT 1
 #define CAT_CURRENT 0xAA
 #define CAT_UPCOMING 0xF0
@@ -67,12 +67,11 @@ static char *randWord(struct word_container *words){
         return NULL;
     }
 
-    // want an error if this isn't set
-    int idx = -1;
-    do{
-        idx = rand() % words->num_words;
-    }while(used(0, idx));
-
+    int idx = rand() % words->num_words;
+    while(used(0, idx)){
+        ++idx; 
+        idx %= words->num_words;
+    }
     return words->words[idx];
 }
 
@@ -81,7 +80,7 @@ static char *randWord(struct word_container *words){
     @param filename filename to create word_container from
     @return option=1 word_container | option=0 free word_conatiner
 */
-static struct word_container *getWordContainer(void *option, char *filename){
+static struct word_container *getWordContainer(int option, char *filename){
     static struct word_container *words;
     if(filename){
         words = getWords(filename);
@@ -171,7 +170,9 @@ void printWords(){
     
     printEscape(CURSOR_HIDE CURSOR_HOME);
 	for(int i = 0; i < COMPlETED; i++){
-		printw(DEFAULT, cur->val);
+        if(cur->category == CAT_CORRECT){printw(DONE_CORRECT, cur->val);}
+        else if(cur->category == CAT_WRONG){printw(DONE_WRONG, cur->val);}
+        else{printw(DEFAULT, cur->val);}
 		cur = cur->next;
 	}
     printEscape(CURSOR_SAVE);
@@ -232,8 +233,6 @@ static int checkChar(char *word, int idx, char **typed, char *string, int *corre
 
    /* verify that the char is okay */  
    if((c < ' ' || c > 127) && (c != '\b')){
-        /* TESTING */
-        // printf("\nINVALID CHARARCTER: %c\n", c);
         return 0;
     }
 
@@ -254,6 +253,9 @@ static int checkChar(char *word, int idx, char **typed, char *string, int *corre
                 string++;
                 word++;
             }
+
+            /* indicates the previous chars are correct */
+            if(!*string){*correct = 1;}
 
             printf(CURSOR_BACK CURSOR_SAVE CURRENT "%s  ", word);
             printWordsAt(getList()->current->next);
@@ -317,9 +319,27 @@ void typeCurrentWord(){
 
     if(strCompare(word, typed_arr)){
         wordCount(1);
+        list->current->category = CAT_CORRECT;
+    }
+    else{
+        list->current->category = CAT_WRONG;
     }
 
     printf(CURSOR_FORWARD DEFAULT "  ");
+}
+
+void type(){
+    struct word_container *words = getWordContainer(1, 0);
+    linked_list *list = getList();
+
+    while(1){
+    // for(int i = 0; i < 5; i++){
+        typeCurrentWord();
+        linked_list_append(list, randWord(words), CAT_UPCOMING);
+        linked_list_remove_head(list);
+        list->current = list->current->next;
+        printWords();
+    }
 }
 
 void goodbyeWords(){

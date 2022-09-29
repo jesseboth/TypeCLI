@@ -93,7 +93,7 @@ linked_list_element linked_list_index(linked_list *list, int i);
     @param i                index
     @return -
 */
-linked_node linked_list_index_node(linked_list *list, int i);
+linked_node *linked_list_index_node(linked_list *list, int i);
 
 /* Remove a node from a specific index - frees node
     @param *list            linked list
@@ -119,7 +119,7 @@ void linked_list_remove_head(linked_list *list);
     @param *list            linked list
     @return linked_node*    at head
 */
-linked_node lined_list_remove_head_node(linked_list *list);
+linked_node *linked_list_remove_head_node(linked_list *list);
 
 
 /* Remove node at head - frees node
@@ -132,6 +132,6 @@ void linked_list_remove_tail(linked_list *list);
     @param *list            linked list
     @return lined_node*     at tail
 */
-linked_node lined_list_remove_head_tail(linked_list *list);
+linked_node *linked_list_remove_tail_node(linked_list *list);
 
 

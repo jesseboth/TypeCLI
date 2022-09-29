@@ -8,17 +8,12 @@
 
 #include "include/words.h"
 
-void *signalHandler(int sig){
-	goodbyeWords();
-}
-
 int main(int argc, char **argv){
 	char *filename = "src/words.txt";
 	atexit(goodbyeWords); 				// exit function
 
 	setupWords(filename);
-	typeCurrentWord();
-	typeCurrentWord();
+	type();
 
 	return 0;
 }
