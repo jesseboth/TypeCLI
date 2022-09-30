@@ -5,7 +5,7 @@
 
 #include "include/colors.h"
 #include "include/terminal.h"
-
+#include "include/timer.h"
 #include "include/words.h"
 
 int main(int argc, char **argv){
@@ -16,7 +16,7 @@ int main(int argc, char **argv){
 	pthread_t thread;
 	pthread_create(&thread, NULL, &type, NULL);
 
-	sleep(60);
+	timer();
 	pthread_cancel(thread);
 
 	return 0;

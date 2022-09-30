@@ -1,16 +1,15 @@
 [BACKLOG]
 
 [TODO]
-count all chars
-wpm = char / 5
+waitForEnter - adjust user interface (enter start enter to end)
 
 [PROGRESS]
-setup timer
-
 Debug backspace - fix backspace at last char 
                 - when first char is incorrect
 
 [COMPLETE]
+setup timer
+count all chars
 implement word scrolling - store correct vs incorrect word
 make a loop for more words
 treat linked list like a queue - remove head append tail (prototypes made)
@@ -23,3 +22,7 @@ output words to terminal
 NEED to free everything appropriately
 seperate linked_list.h and queue.h to C files
 function headers for file, linkedlist 
+
+[46]
+constant tracker of chars/min and words/min
+wpm = char / 5

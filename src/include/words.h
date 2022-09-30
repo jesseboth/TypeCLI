@@ -21,6 +21,12 @@ void printWords();
 */
 void typeCurrentWord();
 
+/* wait for Enter key to be pressed
+    @param -
+    @return -
+*/
+void waitForEnter();
+
 /* Loop and swap words
     @param -
     @return -

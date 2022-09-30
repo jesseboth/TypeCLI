@@ -24,8 +24,6 @@
 #define CURSOR_SHOW "\e[?25h"
 #define CURSOR_BACK "\e[1D"
 #define CURSOR_FORWARD "\e[1C"
-
-// TODO: This will change
-#define CURSOR_DONE "\e[2B\e[0G"
+#define CURSOR_WPM "\e[1A"
 
 #define ERASE_LINE "\e[2K"

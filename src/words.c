@@ -117,6 +117,12 @@ static int wordIdx(int add, int reset){
     return count;
 }
 
+static int charCount(int add){
+    static int count;
+    count+=add;
+    return count;
+}
+
 static int strCompare(char *a, char *b){
     while(*a && *b){
         if(*a != *b){
@@ -157,7 +163,7 @@ void setupWords(char *filename){
         linked_list_append(list, randWord(words), CAT_UPCOMING);
 	}
 
-    printf("\n\n\n" CURSOR_START);
+    printf("\n\n\n\n" CURSOR_START);
     printWords();
 
 	enableInput();
@@ -245,11 +251,13 @@ static int checkChar(char *word, int idx, char **typed, char *string, int *corre
         if(*typed >= string){
             **typed = 0;
             (*typed)--;
+
+            charCount(wordIdx(0, 0)*-1);
             wordIdx(0, 1);      // reset
         
             while(*string && *word && *string == *word){
                 wordIdx(1, 0);
-
+                charCount(1);
                 string++;
                 word++;
             }
@@ -312,6 +320,7 @@ void typeCurrentWord(){
         }
         else if(checkChar(word, wordIdx(0,0), &typed, typed_arr, &correct)){
             wordIdx(1, 0);
+            charCount(1);
         }
 
         typed++;    // increment typed every loop
@@ -351,7 +360,7 @@ void goodbyeWords(){
     used(0, 0);
     randWord(0);
     getWordContainer(0, 0);
-    printf(DEFAULT ERASE_LINE CURSOR_HOME "WPM: %d" CURSOR_DONE CURSOR_SHOW, wordCount(0));
+    printf(DEFAULT ERASE_LINE CURSOR_HOME CURSOR_WPM "WPM: %d\tCPM:%d\n\n" CURSOR_SHOW, wordCount(0), charCount(0));
 	turnEchoOn();
 	enableInput();
 	turnCanonOn();
