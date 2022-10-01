@@ -238,7 +238,7 @@ static int checkChar(char *word, int idx, char **typed, char *string, int *corre
    char c = **typed;  
 
    /* verify that the char is okay */  
-   if((c < ' ' || c > 127) && (c != '\b')){
+   if((c < ' ' || c >= 126) && (c != '\b')){
         return 0;
     }
 
@@ -360,8 +360,9 @@ void goodbyeWords(){
     used(0, 0);
     randWord(0);
     getWordContainer(0, 0);
-    printf(DEFAULT ERASE_LINE CURSOR_HOME CURSOR_WPM "WPM: %d\tCPM:%d\n\n" CURSOR_SHOW, wordCount(0), charCount(0));
+    printf(DEFAULT ERASE_LINE CURSOR_HOME CURSOR_WPM "WPM: %d\t    CPM:%d\n\n" CURSOR_SHOW, wordCount(0), charCount(0));
 	turnEchoOn();
 	enableInput();
 	turnCanonOn();
+    fflush(stdout);
 }

@@ -3,8 +3,19 @@
 #include <stdio.h>
 #include "include/colors.h"
 
+int timerContinue(uint8_t set, uint8_t val){
+    static uint8_t timerExit;
+
+    if(set){
+        timerExit = val;
+    }
+
+    return (int)timerExit;
+}
+
 void timer(){
-    for(int i = 60; i >= 0; i--){
+    timerContinue(1,1);
+    for(int i = 60; i >= 0 && timerContinue(0,0); i--){
         printf(CURSOR_SAVE TIMER_POS "Time: %d \n" CURSOR_RESTORE, i);
         sleep(1);
     }
