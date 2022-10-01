@@ -2,6 +2,8 @@
 #include "include/terminal.h"
 #include <time.h>
 
+#include "utility/util.h"
+
 #define SHOW 11
 #define COMPlETED 5
 #define ONDECK 5
@@ -139,6 +141,25 @@ static int strCompare(char *a, char *b){
     return 1;
 }
 
+static int rmEscape(char *check){
+    static int esc;
+    if(*check == '\e'){
+        fgetc(stdin);
+        fgetc(stdin);
+        fgetc(stdin);
+        esc = 1;
+    }
+    else if(esc && *check == '['){
+        fgetc(stdin);
+        fgetc(stdin);
+    }
+    else{
+        esc = 0;
+    }
+
+    return esc;
+}
+
 void setupWords(char *filename){
 
 	disableInput();
@@ -235,10 +256,11 @@ static int checkChar(char *word, int idx, char **typed, char *string, int *corre
         c > ' ' && c < 127 (Normal) \
         IGNORE everything else \
     */
-   char c = **typed;  
+   char c = **typed; 
 
-   /* verify that the char is okay */  
-   if((c < ' ' || c >= 126) && (c != '\b')){
+    /* verify that the char is okay */  
+    if((c < ' ' || c >= 126) && (c != 127 && c != 23)){
+        (*typed)--;
         return 0;
     }
 
@@ -263,22 +285,47 @@ static int checkChar(char *word, int idx, char **typed, char *string, int *corre
             }
 
             /* indicates the previous chars are correct */
-            if(!*string){*correct = 1;}
 
-            printf(CURSOR_BACK CURSOR_SAVE CURRENT "%s  ", word);
+            if(!*word && !*string){
+                printf("  ");
+            }
+            else if(!*correct && *word && !(*(word+1))){
+                printf(CURSOR_BACK CURSOR_SAVE CURRENT "%s  ", word);
+            }
+            else if(*word && !(*(word+1))){
+                printf(CURSOR_SAVE CURRENT "%s  ", word);
+            }
+            else if(!*word && *string){
+                printf(CURSOR_SAVE CURRENT "%s  ", word);
+            }
+            else if(*word){
+                printf(CURSOR_BACK CURSOR_SAVE CURRENT "%s  ", word);
+            }
+   
             printWordsAt(getList()->current->next);
             printEscape(CURSOR_RESTORE);
         }
 
+        if(!*string){*correct = 1;}
         return 0;       // don't increment
+    }
+    else if(!word[idx] && *correct){
+        printf(CURSOR_FORWARD CUR_WRONG "%c", c);
+        printf(CURSOR_SAVE "  ");
+        printWordsAt(getList()->current->next);
+        printEscape(CURSOR_RESTORE);
+        return 0;
     }
     else if(word[idx] == c && *correct){
         printf(CUR_CORRECT "%c" CURRENT, c);
         return *correct;
     }
     else if(word[idx] != c && *correct){
-        printf("\e[%dD" CUR_CORRECT "%s", idx, string);
-        printf(CURSOR_BACK CUR_WRONG "%c", c);
+        if(idx != 0){
+            printf("\e[%dD" CUR_CORRECT "%s", idx, string);
+            printEscape(CURSOR_BACK);
+        }
+        printf(CUR_WRONG "%c", c);
         printEscape(CURSOR_SAVE);
         printf(CURRENT "%s  ", word+idx);
         printWordsAt(getList()->current->next);
@@ -313,6 +360,11 @@ void typeCurrentWord(){
     printf(CURSOR_BG CURRENT "%c" CURSOR_BACK DEFAULT, word[wordIdx(0,0)]);
 		*typed = fgetc(stdin);
         *(typed+1) = 0;
+        rmEscape(typed);
+
+        // printf(CURSOR_SAVE "\n");
+        // hex_dump(typed_arr, 16);
+        // printEscape(CURSOR_RESTORE); 
 
         if(*typed == ' '){
             *typed = 0;     // null terminal for string compare

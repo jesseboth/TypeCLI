@@ -1,7 +1,7 @@
 CC := gcc
 CFLAGS := -g -Wall -std=c99 -fPIC -D_DEFAULT_SOURCE -lm -pthread
-CODE   := src/wordFile.c src/linked_list.o src/words.o src/terminal.o src/timer.o
-C_CODE := src/wordFile.c src/linked_list.c src/words.c src/terminal.c src/timer.c
+CODE   := src/wordFile.c src/linked_list.o src/words.o src/terminal.o src/timer.o src/utility/util.o
+C_CODE := src/wordFile.c src/linked_list.c src/words.c src/terminal.c src/timer.c src/utility/util.c
 
 
 TESTS := $(wildcard tests/*)

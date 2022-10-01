@@ -14,7 +14,7 @@ pthread_t pthread(){
 	return thread;
 }
 
-void sigint_handler(int signum) {
+void sigint_handler(int signum) { //Handler for SIGINT
 	signal(SIGINT, sigint_handler);
 	timerContinue(1, 0);
 	fflush(stdout);
