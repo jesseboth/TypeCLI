@@ -1,5 +1,6 @@
 #include "include/words.h"
 #include "include/terminal.h"
+#include "include/params.h"
 #include <time.h>
 
 #include "utility/util.h"
@@ -87,7 +88,7 @@ static struct word_container *getWordContainer(int option, char *filename){
     if(filename){
         words = getWords(filename);
         if(!words){
-            printf("Words not found");
+            printf("Words not found\n");
             return NULL;
         }
     }
@@ -160,16 +161,17 @@ static int rmEscape(char *check){
     return esc;
 }
 
-void setupWords(char *filename){
+int setupWords(char *filename){
 
-	disableInput();
     struct word_container *words = getWordContainer(0, filename);
 
     static char *placeholder = "    ";
-    if(!used(words->num_words, 0)){
-        printf("Array not initialized");
-        return;
+    if(!words || !used(words->num_words, 0)){
+        printf("Array not initialized\n");
+        return 0;
     }
+    
+	disableInput();
     
     linked_list *list = getList();
 	for(int i = 0; i < COMPlETED; i++){
@@ -190,6 +192,8 @@ void setupWords(char *filename){
 	enableInput();
 	turnEchoOff();
 	turnCanonOff();
+
+    return 1;
 }
 
 void printWords(){
@@ -362,9 +366,11 @@ void typeCurrentWord(){
         *(typed+1) = 0;
         rmEscape(typed);
 
-        // printf(CURSOR_SAVE "\n");
-        // hex_dump(typed_arr, 16);
-        // printEscape(CURSOR_RESTORE); 
+        if(checkParam(PARAM_DEBUG)){
+            printf(CURSOR_SAVE "\n\n\e[A");
+            hex_dump(typed_arr, 16);
+            printEscape(CURSOR_RESTORE); 
+        }
 
         if(*typed == ' '){
             *typed = 0;     // null terminal for string compare
@@ -412,7 +418,7 @@ void goodbyeWords(){
     used(0, 0);
     randWord(0);
     getWordContainer(0, 0);
-    printf(DEFAULT ERASE_LINE CURSOR_HOME CURSOR_WPM "WPM: %d\t    CPM:%d\n\n" CURSOR_SHOW, wordCount(0), charCount(0));
+    printf(DEFAULT ERASE_LINE CURSOR_HOME CURSOR_WPM "WPM: %d\t    CPM:%d\n\n" ERASE_LINE CURSOR_SHOW, wordCount(0), charCount(0));
 	turnEchoOn();
 	enableInput();
 	turnCanonOn();

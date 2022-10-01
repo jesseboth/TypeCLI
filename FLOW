@@ -2,12 +2,14 @@
 
 [TODO]
 waitForEnter - adjust user interface (enter start enter to end)
+comment Parameters
 
 [PROGRESS]
-Debug backspace - fix backspace at last char 
-                - when first char is incorrect
+Parameters parsing
 
 [COMPLETE]
+Debug backspace - fix backspace at last char 
+                - when first char is incorrect
 setup timer
 count all chars
 implement word scrolling - store correct vs incorrect word

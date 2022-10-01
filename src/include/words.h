@@ -5,9 +5,9 @@
 
 /* Initialize words and all necessary containers 
     @param *filename    name of file containing words
-    @return -
+    @return true/false  failure/success  
 */
-void setupWords(char *filename);
+int setupWords(char *filename);
 
 /* Prints the formatted words  
     @param -
