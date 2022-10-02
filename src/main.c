@@ -22,7 +22,7 @@ void sigint_handler(int signum) { //Handler for SIGINT
 }
 
 int main(int argc, char **argv){
-	char *filename = "src/words.txt";
+	char *filename = NULL;
 	
 	/* Get parameters */
 	parseParams(argc, argv);
