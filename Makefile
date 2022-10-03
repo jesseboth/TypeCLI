@@ -15,9 +15,7 @@ a.out: $(CODE) src/main.o
 	$(CC) -o $@ $^ $(CFLAGS)
 
 run:
-	@echo " "
-	@./a.out
-	@echo " "
+	@./a.out $@
 
 debug: $(CODE) src/main.o
 	$(CC) -o $@ $^ $(CFLAGS)

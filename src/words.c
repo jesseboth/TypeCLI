@@ -164,6 +164,8 @@ static int rmEscape(char *check){
 int setupWords(char *filename){
     struct word_container *words;
 
+	printEscape(CURSOR_HIDE);		// Make sure cursor hides
+
     if(filename == NULL){
         words = getWordContainer(0, (char *)1);
     }
