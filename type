@@ -1,1 +1,0 @@
-./${BASH_SOURCES%/*}/.project/TypeCLI/a.out $@
