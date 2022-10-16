@@ -144,14 +144,14 @@ static int strCompare(char *a, char *b){
 
 static int rmEscape(char *check){
     static int esc;
-    if(*check == '\e'){
+    static char n;
+
+    if(*check == '\e'){        // fgetc(stdin);
         fgetc(stdin);
-        fgetc(stdin);
-        fgetc(stdin);
+        n = fgetc(stdin);
         esc = 1;
     }
-    else if(esc && *check == '['){
-        fgetc(stdin);
+    else if(esc && *check == n){
         fgetc(stdin);
     }
     else{
@@ -162,8 +162,16 @@ static int rmEscape(char *check){
 }
 
 int setupWords(char *filename){
+    struct word_container *words;
 
-    struct word_container *words = getWordContainer(0, filename);
+	printEscape(CURSOR_HIDE);		// Make sure cursor hides
+
+    if(filename == NULL){
+        words = getWordContainer(0, (char *)1);
+    }
+    else{
+        words = getWordContainer(0, filename);
+    }
 
     static char *placeholder = "    ";
     if(!words || !used(words->num_words, 0)){
@@ -268,7 +276,20 @@ static int checkChar(char *word, int idx, char **typed, char *string, int *corre
         return 0;
     }
 
-    if(c == '\b' || c == 127){
+    // ctrl+backspace
+    if(c == 0x17){
+        *typed = string-1;
+        while(*string++){
+            *string = 0;
+            printEscape(CURSOR_BACK);
+        }
+        wordIdx(0, 1);      // reset
+        printWords();
+        *correct = 1;
+        return 0;
+    }
+    // backapce
+    else if(c == '\b' || c == 127){
         if(*typed >= string){
             **typed = 0;
             (*typed)--;
