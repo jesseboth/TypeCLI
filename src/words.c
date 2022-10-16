@@ -278,14 +278,15 @@ static int checkChar(char *word, int idx, char **typed, char *string, int *corre
 
     // ctrl+backspace
     if(c == 0x17){
+        *typed = string-1;
         while(*string++){
             *string = 0;
             printEscape(CURSOR_BACK);
         }
-        wordIdx(-1, 1);      // reset
+        wordIdx(0, 1);      // reset
         printWords();
         *correct = 1;
-        return *correct;
+        return 0;
     }
     // backapce
     else if(c == '\b' || c == 127){
