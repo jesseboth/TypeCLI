@@ -144,14 +144,14 @@ static int strCompare(char *a, char *b){
 
 static int rmEscape(char *check){
     static int esc;
-    if(*check == '\e'){
+    static char n;
+
+    if(*check == '\e'){        // fgetc(stdin);
         fgetc(stdin);
-        fgetc(stdin);
-        fgetc(stdin);
+        n = fgetc(stdin);
         esc = 1;
     }
-    else if(esc && *check == '['){
-        fgetc(stdin);
+    else if(esc && *check == n){
         fgetc(stdin);
     }
     else{
@@ -276,7 +276,19 @@ static int checkChar(char *word, int idx, char **typed, char *string, int *corre
         return 0;
     }
 
-    if(c == '\b' || c == 127){
+    // ctrl+backspace
+    if(c == 0x17){
+        while(*string++){
+            *string = 0;
+            printEscape(CURSOR_BACK);
+        }
+        wordIdx(-1, 1);      // reset
+        printWords();
+        *correct = 1;
+        return *correct;
+    }
+    // backapce
+    else if(c == '\b' || c == 127){
         if(*typed >= string){
             **typed = 0;
             (*typed)--;
