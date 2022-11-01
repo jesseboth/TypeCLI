@@ -1,9 +1,9 @@
 #!/bin/bash
 SCRIPT_DIR=$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )
 if [ ! -f $SCRIPT_DIR/.project/TypeCLI/a.out ]; then
-	SAVEDIR=$PWD
-	cd $SCRIPT_DIR/.project/TypeCLI
-	make a.out >/dev/null
-	cd $SAVEDIR
+  SAVEDIR=$PWD
+  cd $SCRIPT_DIR/.project/TypeCLI
+  make a.out >/dev/null
+  cd $SAVEDIR
 fi
 $SCRIPT_DIR/.project/TypeCLI/a.out $@
