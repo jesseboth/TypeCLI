@@ -11,44 +11,44 @@
 #include "include/params.h"
 
 pthread_t pthread(){
-	static pthread_t thread;
-	return thread;
+  static pthread_t thread;
+  return thread;
 }
 
 void sigint_handler(int signum) { //Handler for SIGINT
-	signal(SIGINT, sigint_handler);
-	timerContinue(1, 0);
-	fflush(stdout);
+  signal(SIGINT, sigint_handler);
+  timerContinue(1, 0);
+  fflush(stdout);
 }
 
 int main(int argc, char **argv){
-	char *filename = NULL;
-	
-	/* Get parameters */
-	parseParams(argc, argv);
-	if(checkParam(PARAM_HELP)){
-		help();
-		return 0;
-	}
-	
-	/* Set custom file */
-	if(checkParam(PARAM_FILENAME)){
-		filename = getParameters()->filename;
-	}
-	
-	if(!setupWords(filename)){
-		return 0;
-	};
+  char *filename = NULL;
+  
+  /* Get parameters */
+  parseParams(argc, argv);
+  if(checkParam(PARAM_HELP)){
+    help();
+    return 0;
+  }
+  
+  /* Set custom file */
+  if(checkParam(PARAM_FILENAME)){
+    filename = getParameters()->filename;
+  }
+  
+  if(!setupWords(filename)){
+    return 0;
+  };
 
-	atexit(goodbyeWords); 				// exit function
-	signal(SIGINT, sigint_handler);
-	
+  atexit(goodbyeWords);         // exit function
+  signal(SIGINT, sigint_handler);
+  
 
-	pthread_t thread = pthread();
-	pthread_create(&thread, NULL, &type, NULL);
+  pthread_t thread = pthread();
+  pthread_create(&thread, NULL, &type, NULL);
 
-	timer();
-	pthread_cancel(thread);
+  timer();
+  pthread_cancel(thread);
 
-	return 0;
+  return 0;
 }

@@ -4,7 +4,7 @@
 #define PARAM_HELP 2
 
 struct parameters{
-    char *filename;
+  char *filename;
 };
 
 void help();
