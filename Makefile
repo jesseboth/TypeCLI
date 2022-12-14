@@ -1,6 +1,6 @@
 CC := gcc
 CFLAGS := -g -Wall -std=c99 -fPIC -D_DEFAULT_SOURCE -lm -pthread
-CODE   := src/wordFile.c src/linked_list.o src/words.o src/terminal.o src/timer.o src/params.o src/utility/util.o
+CODE   := src/wordFile.o src/linked_list.o src/words.o src/terminal.o src/timer.o src/params.o src/utility/util.o
 C_CODE := src/wordFile.c src/linked_list.c src/words.c src/terminal.c src/timer.c src/params.c src/utility/util.c
 
 
@@ -50,7 +50,8 @@ test: $(TESTS)
 
 clean:
 	rm -f $(TESTS) a.out
-	rm -f src/*.o tests/*.o *~ src/*~ tests/*~  *.s
+	find . -name "*.s" -type f -delete
+	find . -name "*.o" -type f -delete
 
 # See previous assignments for a description of .PHONY
 .PHONY: all clean
