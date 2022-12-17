@@ -5,9 +5,9 @@ void print_linked_list(linked_list *list){
   while(node){
     printf("%s ->", node->val);
     node = node->next;
-  }   
+  }
   printf("\n");
-}   
+}
 
 /*create a node*/
 linked_node *new_node(linked_list_element val, uint8_t cat){
@@ -52,7 +52,7 @@ void free_linked_list(linked_list *list){
 
   list->head = NULL;
   list->tail = NULL;
-  
+
   list->length = 0;
 }
 

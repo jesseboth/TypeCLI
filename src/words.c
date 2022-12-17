@@ -16,7 +16,7 @@
 #define CAT_UPCOMING 0xF0
 
 
-/* Check if the random word has been used 
+/* Check if the random word has been used
   @param num_words the number of available words
   @param check_word the word index to be checked
   @return boolean True/False
@@ -41,7 +41,7 @@ static int used(int num_words, int check_word){
   return 0;
 }
 
-/* Gets the linked list 
+/* Gets the linked list
   @param -
   @return linked_list*
 */
@@ -72,7 +72,7 @@ static char *randWord(struct word_container *words){
 
   int idx = rand() % words->num_words;
   while(used(0, idx)){
-    ++idx; 
+    ++idx;
     idx %= words->num_words;
   }
   return words->words[idx];
@@ -178,9 +178,9 @@ int setupWords(char *filename){
     printf("Array not initialized\n");
     return 0;
   }
-  
+
   disableInput();
-  
+
   linked_list *list = getList();
   for(int i = 0; i < COMPlETED; i++){
     linked_list_append(list, placeholder, CAT_UNSET);
@@ -206,7 +206,7 @@ int setupWords(char *filename){
 
 void printWords(){
   linked_node *cur = getList()->head;
-  
+
   printEscape(CURSOR_HIDE CURSOR_HOME);
   for(int i = 0; i < COMPlETED; i++){
     if(cur->category == CAT_CORRECT){printw(DONE_CORRECT, cur->val);}
@@ -226,7 +226,7 @@ void printWords(){
 }
 
 /* Print words starting at a specific node \
-  @brief callers job to save/restore cursor 
+  @brief callers job to save/restore cursor
   @param *start node from linked list to start at
   @return -
 */
@@ -268,9 +268,9 @@ static int checkChar(char *word, int idx, char **typed, char *string, int *corre
     c > ' ' && c < 127 (Normal) \
     IGNORE everything else \
   */
-   char c = **typed; 
+   char c = **typed;
 
-  /* verify that the char is okay */  
+  /* verify that the char is okay */
   if((c < ' ' || c >= 126) && (c != 127 && c != 23)){
     (*typed)--;
     return 0;
@@ -301,7 +301,7 @@ static int checkChar(char *word, int idx, char **typed, char *string, int *corre
 
       charCount(wordIdx(0, 0)*-1);
       wordIdx(0, 1);    // reset
-    
+
       while(*string && *word && *string == *word){
         wordIdx(1, 0);
         charCount(1);
@@ -326,7 +326,7 @@ static int checkChar(char *word, int idx, char **typed, char *string, int *corre
       else if(*word){
         printf(CURSOR_BACK CURSOR_SAVE CURRENT "%s  ", word);
       }
-   
+
       printWordsAt(getList()->current->next);
       printEscape(CURSOR_RESTORE);
     }
@@ -366,7 +366,7 @@ static int checkChar(char *word, int idx, char **typed, char *string, int *corre
     return *correct;
   }
 
-  
+
    return 0;
 }
 
@@ -390,7 +390,7 @@ void typeCurrentWord(){
     if(checkParam(PARAM_DEBUG)){
       printf(CURSOR_SAVE "\n\n\e[A");
       hex_dump(typed_arr, 16);
-      printEscape(CURSOR_RESTORE); 
+      printEscape(CURSOR_RESTORE);
     }
 
     if(*typed == ' '){

@@ -11,11 +11,11 @@ typedef char *linked_list_element;
 typedef struct linked_node
 {
   linked_list_element val;    //value in list
-  uint8_t category;           // 
+  uint8_t category;           //
   struct linked_node *next;   //next node
 } linked_node;
 
-/* Linked List naster struct 
+/* Linked List naster struct
   @param *head    first element
   @param *tail    last element
   @param *current current node for iteration
@@ -31,38 +31,38 @@ typedef struct linked_list
 } linked_list;
 
 
-/* Prints the linked list  
+/* Prints the linked list
   @param *list    linked_list
   @return -
 */
 void print_linked_list(linked_list *list);
 
-/* Creates a new node  
+/* Creates a new node
   @param val      main value
   @param cat      category value
   @return -
 */
 linked_node *new_node(linked_list_element val, uint8_t cat);
 
-/* Free node  
+/* Free node
   @param *node     linked list node
   @return -
 */
 void free_node(linked_node *node);
 
-/* Make a new list  
+/* Make a new list
   @param -
   @return linked_list*     initialzed linked list
 */
 linked_list *new_linked_list();
 
-/* Clear the entire list  
+/* Clear the entire list
   @param *list    list to be freed
   @return -
 */
 void free_linked_list(linked_list *list);
 
-/* Append to linked list  
+/* Append to linked list
   @param *list    list to be appended to
   @param val      node value
   @param cat      node category
@@ -70,7 +70,7 @@ void free_linked_list(linked_list *list);
 */
 void linked_list_prepend(linked_list *list, linked_list_element val, uint8_t cat);
 
-/* Append to linked list  
+/* Append to linked list
   @param *list    list to be prepended to
   @param val      node value
   @param cat      category
@@ -78,14 +78,14 @@ void linked_list_prepend(linked_list *list, linked_list_element val, uint8_t cat
 */
 void linked_list_append(linked_list *list, linked_list_element val, uint8_t cat);
 
-/* Get a value from a specific index  
+/* Get a value from a specific index
   @param *list    linked list
   @param i        index
   @return -
 */
 linked_list_element linked_list_index(linked_list *list, int i);
 
-/* Get a node from a specific index  
+/* Get a node from a specific index
   @param *list            linked list
   @param i                index
   @return -
@@ -125,7 +125,7 @@ linked_node *linked_list_remove_head_node(linked_list *list);
 */
 void linked_list_remove_tail(linked_list *list);
 
-/* Remove tail 
+/* Remove tail
   @param *list            linked list
   @return lined_node*     at tail
 */

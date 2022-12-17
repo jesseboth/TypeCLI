@@ -17,8 +17,10 @@
 #define CURSOR_START "\e[2A\e[0G"
 
 #define CURSOR_HOME "\e[0G"
-#define CURSOR_SAVE "\e[s"
-#define CURSOR_RESTORE "\e[u"
+//#define CURSOR_SAVE "\e[s"
+#define CURSOR_SAVE "\e7"
+//#define CURSOR_RESTORE "\e[u"
+#define CURSOR_RESTORE "\e8"
 
 #define CURSOR_HIDE "\e[?25l"
 #define CURSOR_SHOW "\e[?25h"
