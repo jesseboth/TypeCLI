@@ -8,59 +8,6 @@
 
 struct termios g_terminalSettings; // global to track and change terminal settings
 
-int test(void) {
-
-  // prevent input immediately
-  disableInput();
-
-  printf("welcome to the game\n");
-
-  // infinite game loop
-  int line = 1;
-  int quit = 0;
-  while (1) {
-
-    // print dialogue
-    for (int i = 0; i < 3; ++i) {
-      printf("line of dialogue %d\n",line++);
-      sleep(1);
-    } // end for
-
-    // input loop
-    enableInput();
-    int input;
-    while (1) {
-      printf("choose a number in 1:3 (-1 to quit)\n");
-      int ret = scanf("%d",&input);
-      discardInputLine(); // clear any trailing garbage (can do this immediately for all cases)
-      if (ret == EOF) {
-        if (ferror(stdin)) { fprintf(stderr, "[error] scanf() failed: %s", strerror(errno) ); exit(1); }
-        printf("end of input\n");
-        quit = 1;
-        break;
-      } else if (ret == 0) { // invalid syntax
-        printf("invalid input\n");
-      } else if (input == -1) { // quit code
-        quit = 1;
-        break;
-      } else if (!(input >= 1 && input <= 3)) { // invalid value
-        printf("number is out-of-range\n");
-      } else { // valid
-        printf("you entered %d\n",input);
-        break;
-      } // end if
-    } // end while
-    if (quit) break;
-    disableInput();
-
-  } // end while
-
-  printf("goodbye\n");
-
-  return 0;
-
-} // end main()
-
 void disableInput(void) {
   turnEchoOff(); // so the terminal won't display all the crap the user decides to type during gameplay
   turnCanonOff(); // so the terminal will return crap characters immediately, so we can clear them later without waiting for a LF

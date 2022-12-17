@@ -8,8 +8,8 @@ void help(){
   printf("TypeCLI: Typing speed test in the command line\n");
   printf("Useage: type <options>\n");
   printf("Options:\n");
-  printf("\t--help   (-h): Display this message\n");
-  printf("\t--debug  (-d): Print debug messages\n");
+  printf("\t--help     (-h): Display this message\n");
+  printf("\t--debug    (-d): Print debug messages\n");
   printf("\t--filename (-f): Use a custom text file\n");
   printf("\t\tUsage - '-f <path to file>\n");
   printf("\t\tFormatting - each word on a newline\n");

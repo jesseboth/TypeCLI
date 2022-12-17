@@ -29,9 +29,10 @@ static int used(int num_words, int check_word){
   else if(num_words == 0){
     // 1 for used, 0 for unused
     if(!u[check_word]){
-      u[check_word] ^= 1;
+      u[check_word] = 1;
+      return 0;
     }
-    return !u[check_word];
+    return u[check_word];
   }
   else{
     u = calloc(num_words, sizeof(uint8_t));
@@ -70,10 +71,20 @@ static char *randWord(struct word_container *words){
     return NULL;
   }
 
-  int idx = rand() % words->num_words;
+  int idx = rand() % (words->num_words-1);
+  int checked = 0;
+
   while(used(0, idx)){
-    ++idx;
-    idx %= words->num_words;
+    ++idx; checked++;
+
+    // loop back to 0 is idx > num_words
+    idx %= (words->num_words-1);
+
+    // reset words if full
+    if(checked == words->num_words){
+      used(0, 0);
+      used(words->num_words, 0);
+    }
   }
   return words->words[idx];
 }
