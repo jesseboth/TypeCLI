@@ -9,7 +9,7 @@ TESTS := $(subst .c,,$(TESTS))
 TESTS := $(subst tests/,,$(TESTS))
 TESTS := $(filter-out _template,$(TESTS))
 
-all: a.out run
+all: a.out
 
 a.out: $(CODE) src/main.o
 	$(CC) -o $@ $^ $(CFLAGS)

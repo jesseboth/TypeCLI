@@ -1,4 +1,4 @@
-#define DEFAULT_NUMWORDS 500
+#define DEFAULT_NUMWORDS sizeof(DEFAULT_WORDS)/sizeof(DEFAULT_WORDS[0])
   char *DEFAULT_WORDS[] = {
   "the",
   "of",

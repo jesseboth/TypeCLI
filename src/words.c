@@ -23,18 +23,18 @@
 */
 static int used(int num_words, int check_word){
   static uint8_t *u;
-  if(!num_words && !check_word){
+  if(num_words == -1){
     free(u);
   }
   else if(num_words == 0){
     // 1 for used, 0 for unused
     if(!u[check_word]){
-      u[check_word] = 1;
+      u[check_word] = 0xff;
       return 0;
     }
     return u[check_word];
   }
-  else{
+  else if (num_words > 0){
     u = calloc(num_words, sizeof(uint8_t));
     return 1;
   }
@@ -82,9 +82,11 @@ static char *randWord(struct word_container *words){
 
     // reset words if full
     if(checked == words->num_words){
-      used(0, 0);
+      DEBUG("Here %d", checked);
+      used(-1, 0);
       used(words->num_words, 0);
     }
+
   }
   return words->words[idx];
 }
@@ -432,7 +434,6 @@ void *type(){
   linked_list *list = getList();
 
   while(1){
-  // for(int i = 0; i < 5; i++){
     typeCurrentWord();
     linked_list_append(list, randWord(words), CAT_UPCOMING);
     linked_list_remove_head(list);
@@ -447,7 +448,7 @@ void goodbyeWords(){
   disableInput();
 
   free_linked_list(getList());
-  used(0, 0);
+  used(-1, 0);
   randWord(0);
   getWordContainer(0, 0);
   printf(DEFAULT ERASE_LINE CURSOR_HOME CURSOR_WPM "WPM: %d\t  CPM:%d\n\n" ERASE_LINE CURSOR_SHOW, wordCount(0), charCount(0));
