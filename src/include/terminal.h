@@ -39,7 +39,7 @@ void setTermiosBit(int fd, tcflag_t bit, int onElseOff );
 */
 void turnEchoOff(void);
 
-/* Enable input echo (default) 
+/* Enable input echo (default)
   @param -
   @return -
 */

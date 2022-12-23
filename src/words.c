@@ -16,24 +16,25 @@
 #define CAT_UPCOMING 0xF0
 
 
-/* Check if the random word has been used 
+/* Check if the random word has been used
   @param num_words the number of available words
   @param check_word the word index to be checked
   @return boolean True/False
 */
 static int used(int num_words, int check_word){
   static uint8_t *u;
-  if(!num_words && !check_word){
+  if(num_words == -1){
     free(u);
   }
   else if(num_words == 0){
     // 1 for used, 0 for unused
     if(!u[check_word]){
-      u[check_word] ^= 1;
+      u[check_word] = 0xff;
+      return 0;
     }
-    return !u[check_word];
+    return u[check_word];
   }
-  else{
+  else if (num_words > 0){
     u = calloc(num_words, sizeof(uint8_t));
     return 1;
   }
@@ -41,7 +42,7 @@ static int used(int num_words, int check_word){
   return 0;
 }
 
-/* Gets the linked list 
+/* Gets the linked list
   @param -
   @return linked_list*
 */
@@ -70,10 +71,22 @@ static char *randWord(struct word_container *words){
     return NULL;
   }
 
-  int idx = rand() % words->num_words;
+  int idx = rand() % (words->num_words-1);
+  int checked = 0;
+
   while(used(0, idx)){
-    ++idx; 
-    idx %= words->num_words;
+    ++idx; checked++;
+
+    // loop back to 0 is idx > num_words
+    idx %= (words->num_words-1);
+
+    // reset words if full
+    if(checked == words->num_words){
+      DEBUG("Here %d", checked);
+      used(-1, 0);
+      used(words->num_words, 0);
+    }
+
   }
   return words->words[idx];
 }
@@ -178,9 +191,9 @@ int setupWords(char *filename){
     printf("Array not initialized\n");
     return 0;
   }
-  
+
   disableInput();
-  
+
   linked_list *list = getList();
   for(int i = 0; i < COMPlETED; i++){
     linked_list_append(list, placeholder, CAT_UNSET);
@@ -206,7 +219,7 @@ int setupWords(char *filename){
 
 void printWords(){
   linked_node *cur = getList()->head;
-  
+
   printEscape(CURSOR_HIDE CURSOR_HOME);
   for(int i = 0; i < COMPlETED; i++){
     if(cur->category == CAT_CORRECT){printw(DONE_CORRECT, cur->val);}
@@ -226,7 +239,7 @@ void printWords(){
 }
 
 /* Print words starting at a specific node \
-  @brief callers job to save/restore cursor 
+  @brief callers job to save/restore cursor
   @param *start node from linked list to start at
   @return -
 */
@@ -268,9 +281,9 @@ static int checkChar(char *word, int idx, char **typed, char *string, int *corre
     c > ' ' && c < 127 (Normal) \
     IGNORE everything else \
   */
-   char c = **typed; 
+   char c = **typed;
 
-  /* verify that the char is okay */  
+  /* verify that the char is okay */
   if((c < ' ' || c >= 126) && (c != 127 && c != 23)){
     (*typed)--;
     return 0;
@@ -301,7 +314,7 @@ static int checkChar(char *word, int idx, char **typed, char *string, int *corre
 
       charCount(wordIdx(0, 0)*-1);
       wordIdx(0, 1);    // reset
-    
+
       while(*string && *word && *string == *word){
         wordIdx(1, 0);
         charCount(1);
@@ -326,7 +339,7 @@ static int checkChar(char *word, int idx, char **typed, char *string, int *corre
       else if(*word){
         printf(CURSOR_BACK CURSOR_SAVE CURRENT "%s  ", word);
       }
-   
+
       printWordsAt(getList()->current->next);
       printEscape(CURSOR_RESTORE);
     }
@@ -366,7 +379,7 @@ static int checkChar(char *word, int idx, char **typed, char *string, int *corre
     return *correct;
   }
 
-  
+
    return 0;
 }
 
@@ -390,7 +403,7 @@ void typeCurrentWord(){
     if(checkParam(PARAM_DEBUG)){
       printf(CURSOR_SAVE "\n\n\e[A");
       hex_dump(typed_arr, 16);
-      printEscape(CURSOR_RESTORE); 
+      printEscape(CURSOR_RESTORE);
     }
 
     if(*typed == ' '){
@@ -421,7 +434,6 @@ void *type(){
   linked_list *list = getList();
 
   while(1){
-  // for(int i = 0; i < 5; i++){
     typeCurrentWord();
     linked_list_append(list, randWord(words), CAT_UPCOMING);
     linked_list_remove_head(list);
@@ -436,7 +448,7 @@ void goodbyeWords(){
   disableInput();
 
   free_linked_list(getList());
-  used(0, 0);
+  used(-1, 0);
   randWord(0);
   getWordContainer(0, 0);
   printf(DEFAULT ERASE_LINE CURSOR_HOME CURSOR_WPM "WPM: %d\t  CPM:%d\n\n" ERASE_LINE CURSOR_SHOW, wordCount(0), charCount(0));

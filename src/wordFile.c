@@ -5,7 +5,6 @@
 struct word_container *getWords(char *filename){
   struct word_container *words = malloc(sizeof(struct word_container));
 
-
   if(filename != (char *)1){
     FILE *file;
     file = fopen(filename, "r");
@@ -16,16 +15,16 @@ struct word_container *getWords(char *filename){
 
     fseek(file, 0L, SEEK_END);
     words->num_bytes = ftell(file);
-    fseek(file, 0L, SEEK_SET);  
- 
-    void *buffer = calloc(words->num_bytes, sizeof(char));   
+    fseek(file, 0L, SEEK_SET);
+
+    void *buffer = calloc(words->num_bytes, sizeof(char));
     if(buffer == NULL){
       return NULL;
     }
- 
+
     fread(buffer, sizeof(char), words->num_bytes, file);
     fclose(file);
-  
+
     words->num_words = numWords(buffer);
     words->words = malloc(sizeof(char *)*words->num_words);
     char *store = (char *)buffer;
@@ -42,14 +41,14 @@ struct word_container *getWords(char *filename){
   }
 
     return words;
-}                                                                                                         
+}
 
 void freeWords(struct word_container *words){
   if(words->words != DEFAULT_WORDS){
     free(words->words[0]);   // free buffer
     free(words->words);    // free array
   }
-  free(words);       // free container  
+  free(words);       // free container
 }
 
 char *nextWord(char **buffer){
@@ -57,7 +56,7 @@ char *nextWord(char **buffer){
     (*buffer)++;
   }
 
-  char *c = *buffer; 
+  char *c = *buffer;
   if(*c){
     *c = '\0';
     return ++(*buffer);

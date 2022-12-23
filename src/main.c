@@ -23,26 +23,26 @@ void sigint_handler(int signum) { //Handler for SIGINT
 
 int main(int argc, char **argv){
   char *filename = NULL;
-  
+
   /* Get parameters */
   parseParams(argc, argv);
   if(checkParam(PARAM_HELP)){
     help();
     return 0;
   }
-  
+
   /* Set custom file */
   if(checkParam(PARAM_FILENAME)){
     filename = getParameters()->filename;
   }
-  
+
   if(!setupWords(filename)){
     return 0;
   };
 
   atexit(goodbyeWords);         // exit function
   signal(SIGINT, sigint_handler);
-  
+
 
   pthread_t thread = pthread();
   pthread_create(&thread, NULL, &type, NULL);

@@ -1,16 +1,18 @@
 [BACKLOG]
 
 [TODO]
+double free error comes occasionaly
 waitForEnter - adjust user interface (enter start enter to end)
 comment Parameters
-debug duplicate words
 
 [PROGRESS]
 default words
 Parameters parsing
 
 [COMPLETE]
-Debug backspace - fix backspace at last char 
+seg faulting (out of words)
+debug duplicate words
+Debug backspace - fix backspace at last char
                 - when first char is incorrect
 setup timer
 count all chars
@@ -25,7 +27,7 @@ make words pretty with escape sequences
 output words to terminal
 NEED to free everything appropriately
 seperate linked_list.h and queue.h to C files
-function headers for file, linkedlist 
+function headers for file, linkedlist
 
 [46]
 constant tracker of chars/min and words/min
