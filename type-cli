@@ -6,4 +6,17 @@ if [ ! -f $SCRIPT_DIR/.project/TypeCLI/a.out ]; then
   make a.out >/dev/null
   cd $SAVEDIR
 fi
-$SCRIPT_DIR/.project/TypeCLI/a.out $@
+
+
+function run() {
+  if ! $SCRIPT_DIR/.project/TypeCLI/a.out $@ 2>/dev/null ; then
+    SAVEDIR=$PWD
+    cd $SCRIPT_DIR/.project/TypeCLI
+    make clean >/dev/null
+    make >/dev/null
+    cd $SAVEDIR
+    run
+  fi
+}
+
+run
