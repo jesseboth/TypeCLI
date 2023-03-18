@@ -1,6 +1,7 @@
 #include "include/words.h"
 #include "include/terminal.h"
 #include "include/params.h"
+#include "include/timer.h"
 #include <time.h>
 
 #include "utility/util.h"
@@ -451,7 +452,12 @@ void goodbyeWords(){
   used(-1, 0);
   randWord(0);
   getWordContainer(0, 0);
-  printf(DEFAULT ERASE_LINE CURSOR_HOME CURSOR_WPM "WPM: %d\t  CPM:%d\n\n" ERASE_LINE CURSOR_SHOW, wordCount(0), charCount(0));
+  if(!timerDecrement(0)){
+    printf(DEFAULT ERASE_LINE CURSOR_HOME CURSOR_WPM "WPM: %d\t  CPM:%d\n\n" ERASE_LINE CURSOR_SHOW, wordCount(0), charCount(0));
+  }
+  else{
+    printf(DEFAULT ERASE_LINE CURSOR_HOME CURSOR_WPM "Wwords/s: %d/%d\t  CPM:%d\n\n" ERASE_LINE CURSOR_SHOW, wordCount(0), 60-timerDecrement(0), charCount(0));
+  }
   turnEchoOn();
   enableInput();
   turnCanonOn();

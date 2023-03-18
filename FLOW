@@ -1,15 +1,15 @@
 [BACKLOG]
 
 [TODO]
-double free error comes occasionaly
 waitForEnter - adjust user interface (enter start enter to end)
 comment Parameters
 
 [PROGRESS]
-default words
-Parameters parsing
 
 [COMPLETE]
+Parameters parsing
+default words
+double free error comes occasionaly
 seg faulting (out of words)
 debug duplicate words
 Debug backspace - fix backspace at last char
