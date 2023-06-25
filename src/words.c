@@ -456,7 +456,7 @@ void goodbyeWords(){
     printf(DEFAULT ERASE_LINE CURSOR_HOME CURSOR_WPM "WPM: %d\t  CPM:%d\n\n" ERASE_LINE CURSOR_SHOW, wordCount(0), charCount(0));
   }
   else{
-    printf(DEFAULT ERASE_LINE CURSOR_HOME CURSOR_WPM "Wwords/s: %d/%d\t  CPM:%d\n\n" ERASE_LINE CURSOR_SHOW, wordCount(0), 60-timerDecrement(0), charCount(0));
+    printf(DEFAULT ERASE_LINE CURSOR_HOME CURSOR_WPM "Words/s: %d/%d\t  CPM:%d\n\n" ERASE_LINE CURSOR_SHOW, wordCount(0), 60-timerDecrement(0), charCount(0));
   }
   turnEchoOn();
   enableInput();

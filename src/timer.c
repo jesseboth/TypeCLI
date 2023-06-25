@@ -22,7 +22,7 @@ int timerDecrement(uint8_t dec) {
 
 void timer(){
   timerContinue(1,1);
-  for(uint8_t i = timerDecrement(0); i >= 0 && timerContinue(0,0); i=timerDecrement(1)){
+  for(uint8_t i = timerDecrement(0); i > 0 && timerContinue(0,0); i=timerDecrement(1)){
     printf(CURSOR_SAVE TIMER_POS "Time: %d \n" CURSOR_RESTORE, i);
     sleep(1);
   }
