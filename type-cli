@@ -9,14 +9,16 @@ fi
 
 
 function run() {
-  if ! $SCRIPT_DIR/.project/TypeCLI/a.out $@ 2>/dev/null ; then
-    SAVEDIR=$PWD
-    cd $SCRIPT_DIR/.project/TypeCLI
-    make clean >/dev/null
-    make >/dev/null
-    cd $SAVEDIR
-    run
-  fi
+  $SCRIPT_DIR/.project/TypeCLI/a.out $@
+  # if ! $SCRIPT_DIR/.project/TypeCLI/a.out $@ 2>/dev/null ; then
+  #   echo $?
+  #   SAVEDIR=$PWD
+  #   cd $SCRIPT_DIR/.project/TypeCLI
+  #   make clean >/dev/null
+  #   make >/dev/null
+  #   cd $SAVEDIR
+  #   run
+  # fi
 }
 
 run $@

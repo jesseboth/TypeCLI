@@ -11,6 +11,7 @@ void help(){
   printf("\t--help     (-h): Display this message\n");
   printf("\t--debug    (-d): Print debug messages\n");
   printf("\t--filename (-f): Use a custom text file\n");
+  printf("\t--quiet    (-q): Quiet mode does not show results\n");
   printf("\t\tUsage - '-f <path to file>\n");
   printf("\t\tFormatting - each word on a newline\n");
 }
@@ -73,6 +74,9 @@ int findOption(char *opt){
   }
   else if(strCompare(opt, "-h") || strCompare(opt, "--help")){
     return PARAM_HELP;
+  }
+  else if(strCompare(opt, "-q") || strCompare(opt, "--quiet")){
+    return PARAM_QUIET;
   }
 
   return -1;

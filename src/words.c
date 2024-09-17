@@ -118,7 +118,7 @@ static struct word_container *getWordContainer(int option, char *filename){
   @param add number to be added
   @return word count
 */
-static int wordCount(int add){
+int wordCount(int add){
   static int count;
   count+=add;
   return count;
@@ -452,7 +452,10 @@ void goodbyeWords(){
   used(-1, 0);
   randWord(0);
   getWordContainer(0, 0);
-  if(!timerDecrement(0)){
+  if(checkParam(PARAM_QUIET)){
+    printf(DEFAULT ERASE_LINE CURSOR_START CURSOR_SHOW);
+  }
+  else if(!timerDecrement(0)){
     printf(DEFAULT ERASE_LINE CURSOR_HOME CURSOR_WPM "WPM: %d\t  CPM:%d\n\n" ERASE_LINE CURSOR_SHOW, wordCount(0), charCount(0));
   }
   else{

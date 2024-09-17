@@ -2,6 +2,7 @@
 #define PARAM_DEBUG 0
 #define PARAM_FILENAME 1
 #define PARAM_HELP 2
+#define PARAM_QUIET 3
 
 struct parameters{
   char *filename;

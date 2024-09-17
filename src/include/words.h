@@ -38,3 +38,9 @@ void *type();
   @return -
 */
 void goodbyeWords();
+
+/* Count the number of words typed
+  @param add    increment value
+  @return -
+*/
+int wordCount(int add);

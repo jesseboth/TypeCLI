@@ -50,5 +50,9 @@ int main(int argc, char **argv){
   timer();
   pthread_cancel(thread);
 
+  if(checkParam(PARAM_QUIET)){
+    return wordCount(0);
+  }
+
   return 0;
 }
